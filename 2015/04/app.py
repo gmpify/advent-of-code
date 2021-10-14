@@ -4,16 +4,16 @@ import re
 class Md5Miner:
     def __init__(self, secret_key):
         self.secret_key = secret_key
-        self.answer = 0
 
     def mine(self, zeros = 5):
+        answer = 0
         while True:
-            current_key = self.secret_key + str(self.answer)
+            current_key = self.secret_key + str(answer)
             md5 = hashlib.md5(current_key.encode())
             md5_hash = md5.hexdigest()
             if re.match(rf"0{{{zeros}}}", md5_hash):
-                return self.answer
-            self.answer += 1
+                return answer
+            answer += 1
 
 if __name__ == '__main__':
     miner = Md5Miner('ckczppom')
