@@ -12,7 +12,7 @@ class DistributionPlan:
 
     def execute(self):
         for instruction in self.instructions:
-            santa = self.santas[0]
+            santa = self.santas[self.santa_to_move]
             santa.move(instruction)
             self.houses.add(santa.position())
 
