@@ -36,3 +36,12 @@ class Santa:
 
     def deliver_present(self):
         self.presents_delivered_per_house[self.position()] = self.presents_delivered_per_house.get(self.position(), 0) + 1
+
+if __name__ == '__main__':
+    f = open('input.txt', 'r')
+    input = f.read()
+
+    santa = Santa(input)
+    santa.move()
+
+    print('Houses visited: ', santa.houses_visited())
