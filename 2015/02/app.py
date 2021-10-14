@@ -42,10 +42,16 @@ def parse_boxes(boxes_measures):
 def calculate_total_paper_needed(boxes):
     return sum([box.needed_wrapping_paper() for box in boxes])
 
+def calculate_total_ribbon_needed(boxes):
+    return sum([box.needed_ribbon() for box in boxes])
+
 if __name__ == '__main__':
     f = open('input.txt', 'r')
     input = f.read().split('\n')
 
     boxes = parse_boxes(input)
     total_paper_needed = calculate_total_paper_needed(boxes)
-    print(total_paper_needed)
+    print('Paper needed: ', total_paper_needed, 'ft2')
+
+    total_ribbon_needed = calculate_total_ribbon_needed(boxes)
+    print('Ribbon needed: ', total_ribbon_needed, 'ft')

@@ -1,5 +1,5 @@
 import pytest
-from app import Box, parse_boxes, calculate_total_paper_needed
+from app import Box, parse_boxes, calculate_total_paper_needed, calculate_total_ribbon_needed
 
 
 @pytest.fixture
@@ -71,3 +71,7 @@ def test_parse_boxes(box1, box2):
 
 def test_calculate_total_paper_needed(box1, box2):
     assert calculate_total_paper_needed([box1, box2]) == 101
+
+
+def test_calculate_total_ribbon_needed(box1, box2):
+    assert calculate_total_ribbon_needed([box1, box2]) == 48
