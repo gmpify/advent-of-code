@@ -54,3 +54,8 @@ if __name__ == '__main__':
     plan.execute()
 
     print('Houses visited: ', plan.houses_visited())
+
+    plan = DistributionPlan(input, 2)
+    plan.execute()
+
+    print('Houses visited with 2 Santas: ', plan.houses_visited())
