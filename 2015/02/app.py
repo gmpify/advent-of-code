@@ -11,6 +11,9 @@ class Box:
 
     def needed_wrapping_paper(self) -> int:
         return self.surface_area() + self.smallest_side_area()
+    
+    def needed_ribbon(self) -> int:
+        return self.smallest_perimeter() + self.volume()
 
     def surface_area(self) -> int:
         l, w, h = self.length, self.width, self.height
@@ -19,6 +22,14 @@ class Box:
     def smallest_side_area(self) -> int:
         l, w, h = self.length, self.width, self.height
         return min(l*w, w*h, h*l)
+    
+    def smallest_perimeter(self) -> int:
+        l, w, h = self.length, self.width, self.height
+        return min(2*(l+w), 2*(w+h), 2*(h+l))
+    
+    def volume(self) -> int:
+        l, w, h = self.length, self.width, self.height
+        return l*w*h
 
 def parse_boxes(boxes_measures):
     result = []
