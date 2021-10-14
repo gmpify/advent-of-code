@@ -35,6 +35,7 @@ def test_two_santas_square_instructions():
 
     assert d.houses_visited() == 3
 
+
 def test_two_santas_line_instructions():
     d = DistributionPlan('^v^v^v^v^v', 2)
     d.execute()

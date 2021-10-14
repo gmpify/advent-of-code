@@ -1,7 +1,7 @@
 class DistributionPlan:
-    def __init__(self, instructions, santa_numbers = 1):
+    def __init__(self, instructions, number_of_santas = 1):
         self.instructions = instructions
-        self.santas = [Santa() for _ in range(santa_numbers)]
+        self.santas = [Santa() for _ in range(number_of_santas)]
         self.houses = set()
         for santa in self.santas:
             self.houses.add(santa.position())
