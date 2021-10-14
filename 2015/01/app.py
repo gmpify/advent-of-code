@@ -7,18 +7,18 @@ class Santa:
         self.step = 0
         self.floor = 0
 
-    def follow_instructions(self):
-        while self.can_move():
-            self.move()
+    def move(self):
+        while self.can_move_step():
+            self.move_step()
 
     def enter_basement(self):
-        while self.can_move() and self.floor >= 0:
-            self.move()
+        while self.can_move_step() and self.floor >= 0:
+            self.move_step()
 
-    def can_move(self):
+    def can_move_step(self):
         return self.step < len(self._instructions)
 
-    def move(self):
+    def move_step(self):
         instruction = self._instructions[self.step]
         if instruction == self.MOVE_UP:
             self.floor += 1
@@ -32,7 +32,7 @@ if __name__ == '__main__':
     f = open('input.txt', 'r')
     instructions = f.read()
     santa = Santa(instructions)
-    santa.follow_instructions()
+    santa.move()
     print('Part 1: ', santa.floor)
 
     santa = Santa(instructions)
