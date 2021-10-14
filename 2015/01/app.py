@@ -29,7 +29,7 @@ class Santa:
         self.step += 1
 
 if __name__ == '__main__':
-    f = open('input_part1.txt', 'r')
+    f = open('input.txt', 'r')
     instructions = f.read()
     santa = Santa(instructions)
     santa.follow_instructions()
