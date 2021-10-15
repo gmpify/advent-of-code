@@ -6,7 +6,7 @@ class Validator:
         self.validations = [
             self.contains_three_vowels,
             self.contains_repeated_letter,
-            self.not_contains_blocked_substring
+            self.contains_only_allowed_substring
         ]
 
     def contains_three_vowels(self):
@@ -14,7 +14,17 @@ class Validator:
         return len(matches) >= 3
 
     def contains_repeated_letter(self):
-        pass
+        previous_letter = ''
+        for letter in self.string:
+            if letter == previous_letter:
+                return True
+            previous_letter = letter
+        return False
 
-    def not_contains_blocked_substring(self):
-        pass
+    def contains_only_allowed_substring(self):
+        blocked_substrings = ['ab', 'cd', 'pq', 'xy']
+        for substring in blocked_substrings:
+            if substring in self.string:
+                return False
+        return True
+
