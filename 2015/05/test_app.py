@@ -36,3 +36,27 @@ def test_not_contains_only_allowed_substring():
     v = Validator('haegwjzuvuyypxyu')
     assert v.contains_only_allowed_substring() is False
 
+
+def test_contains_repeated_substring():
+    v = Validator('xyxy')
+    assert v.contains_repeated_substring() is True
+
+
+def test_not_contains_repeated_substring():
+    v = Validator('aaa')
+    assert v.contains_repeated_substring() is False
+
+
+def test_contains_repeated_letter_distance_2():
+    v = Validator('xyx')
+    assert v.contains_repeated_letter(2) is True
+
+
+def test_contains_repeated_letter_distance_2():
+    v = Validator('abcdefeghi')
+    assert v.contains_repeated_letter(2) is True
+
+
+def test_contains_repeated_letter_distance_2():
+    v = Validator('aaa')
+    assert v.contains_repeated_letter(2) is True
