@@ -3,60 +3,60 @@ from app import *
 
 
 def test_contains_three_vowels_in_order():
-    v = Validator('aei')
+    v = ValidatorPartOne('aei')
     assert v.contains_three_vowels() is True
 
 
 def test_contains_three_vowels_not_in_order():
-    v = Validator('xazegov')
+    v = ValidatorPartOne('xazegov')
     assert v.contains_three_vowels() is True
 
 
 def test_not_contains_three_vowels():
-    v = Validator('dvszwmarrgswjxmb')
+    v = ValidatorPartOne('dvszwmarrgswjxmb')
     assert v.contains_three_vowels() is False
 
 
 def test_contains_repeated_letter():
-    v = Validator('abcdde')
+    v = ValidatorPartOne('abcdde')
     assert v.contains_repeated_letter() is True
 
 
 def test_not_contains_repeated_letter():
-    v = Validator('jchzalrnumimnmhp')
+    v = ValidatorPartOne('jchzalrnumimnmhp')
     assert v.contains_repeated_letter() is False
 
 
 def test_contains_only_allowed_substring():
-    v = Validator('aaa')
+    v = ValidatorPartOne('aaa')
     assert v.contains_only_allowed_substring() is True
 
 
 def test_not_contains_only_allowed_substring():
-    v = Validator('haegwjzuvuyypxyu')
+    v = ValidatorPartOne('haegwjzuvuyypxyu')
     assert v.contains_only_allowed_substring() is False
 
 
 def test_contains_repeated_substring():
-    v = Validator('xyxy')
+    v = ValidatorPartTwo('xyxy')
     assert v.contains_repeated_substring() is True
 
 
 def test_not_contains_repeated_substring():
-    v = Validator('aaa')
+    v = ValidatorPartTwo('aaa')
     assert v.contains_repeated_substring() is False
 
 
 def test_contains_repeated_letter_distance_2():
-    v = Validator('xyx')
+    v = ValidatorPartTwo('xyx')
     assert v.contains_repeated_letter(2) is True
 
 
 def test_contains_repeated_letter_distance_2():
-    v = Validator('abcdefeghi')
+    v = ValidatorPartTwo('abcdefeghi')
     assert v.contains_repeated_letter(2) is True
 
 
 def test_contains_repeated_letter_distance_2():
-    v = Validator('aaa')
+    v = ValidatorPartTwo('aaa')
     assert v.contains_repeated_letter(2) is True
