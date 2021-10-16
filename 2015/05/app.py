@@ -12,9 +12,6 @@ class Validator:
         matches = re.findall(r'[aeiou]', self.string)
         return len(matches) >= 3
 
-    def contains_repeated_letter_distant_of_2(self):
-        return self.contains_repeated_letter(2)
-
     def contains_repeated_letter(self, distance=1):
         for i in range(distance, len(self.string)):
             if self.string[i] == self.string[i - distance]:
@@ -27,7 +24,7 @@ class Validator:
             if substring in self.string:
                 return False
         return True
-    
+
     def contains_repeated_substring(self):
         substrings = [self.string[i] + self.string[i + 1] for i in range(len(self.string) - 1)]
         repeated_substrings = [substring for substring in substrings if self.string.count(substring) > 1]
@@ -49,6 +46,9 @@ class ValidatorPartTwo(Validator):
             self.contains_repeated_substring,
             self.contains_repeated_letter_distant_of_2
         ]
+
+    def contains_repeated_letter_distant_of_2(self):
+        return self.contains_repeated_letter(2)
 
 if __name__ == '__main__':
     f = open('input.txt', 'r')
