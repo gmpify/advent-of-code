@@ -1,4 +1,3 @@
-from os import curdir
 import re
 
 class Wire:
