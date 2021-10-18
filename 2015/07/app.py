@@ -2,16 +2,39 @@ from os import curdir
 import re
 
 class Wire:
-    def __init__(self, identifier):
-        self.identifier = identifier
-        self.signal_input = None
-        self.signal = None
-
-    def set_input(self, input):
+    def __init__(self, input):
         self.signal_input = input
+        self.signal = None
+        self.depends_on = set()
+        self.parse_dependencies()
+
+    def parse_dependencies(self):
+        for input_wire in re.findall(r'[a-z]{1,2}', self.signal_input):
+            self.depends_on.add(input_wire)
+
+    def has_dependencies(self):
+        return len(self.depends_on) > 0
     
-    def set_signal(self, signal):
-        self.signal = signal
+    def remove_dependency(self, element):
+        self.depends_on.discard(element)
+
+    @classmethod
+    def build_wire_type(self, input):
+        if 'AND' in input:
+            wire = WireAnd(input)
+        elif 'OR' in input:
+            wire = WireOr(input)
+        elif 'NOT' in input:
+            wire = WireNot(input)
+        elif 'LSHIFT' in input:
+            wire = WireLShift(input)
+        elif 'RSHIFT' in input:
+            wire = WireRShift(input)
+        elif input.isnumeric():
+            wire = WireValue(input)
+        else:
+            wire = WirePassThrough(input)
+        return wire
     
 class WireValue(Wire):
     def resolve(self):
@@ -63,63 +86,32 @@ class WireRShift(Wire):
 class Circuit:
     def __init__(self):
         self.wires = {}
-        self.wires_to_dependencies = {}
 
     def resolve(self):
-        element = self.find_element_to_resolve()
-        while element is not None:
+        while True:
+            element = self.find_unresolved_element_without_dependencies()
+            if element is None:
+                break
             func = self.wires[element].resolve()
+            value = func(self.wires)
+            self.wires[element].signal = value
+            print(f'{element}: {value}')
             self.delete_element_in_dependencies(element)
 
-            value = func(self.wires)
-            self.wires[element].set_signal(value)
-            print(f'{element}: {value}')
-
-            element = self.find_element_to_resolve()
-
-    def find_element_to_resolve(self):
-        for elem, values in self.wires_to_dependencies.items():
-            if len(values) == 0:
-                return elem
+    def find_unresolved_element_without_dependencies(self):
+        for identifier, wire in self.wires.items():
+            if wire.signal is None and not wire.has_dependencies():
+                return identifier
         return None
 
     def delete_element_in_dependencies(self, element):
-        for _, values in self.wires_to_dependencies.items():
-            values.discard(element)
-        del(self.wires_to_dependencies[element])
+        for _, wire in self.wires.items():
+            wire.remove_dependency(element)
 
     def add_instruction(self, instruction):
         input, identifier = [term.strip() for term in instruction.split('->')]
-        self.parse_dependencies(input, identifier)
-        self.add_wire(input,identifier)
-
-    def parse_dependencies(self, input, identifier):
-        dependecies = set()
-        for input_wire in re.findall(r'[a-z]{1,2}', input):
-            dependecies.add(input_wire)
-        self.wires_to_dependencies[identifier] = dependecies
-
-    def add_wire(self, input, identifier):
-        wire = self.build_wire_type(input)
-        wire.set_input(input)
+        wire = Wire.build_wire_type(input)
         self.wires[identifier] = wire
-
-    def build_wire_type(self, input):
-        if 'AND' in input:
-            wire = WireAnd(input)
-        elif 'OR' in input:
-            wire = WireOr(input)
-        elif 'NOT' in input:
-            wire = WireNot(input)
-        elif 'LSHIFT' in input:
-            wire = WireLShift(input)
-        elif 'RSHIFT' in input:
-            wire = WireRShift(input)
-        elif input.isnumeric():
-            wire = WireValue(input)
-        else:
-            wire = WirePassThrough(input)
-        return wire
 
 if __name__ == '__main__':
     f = open('input.txt')
