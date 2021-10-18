@@ -4,33 +4,33 @@ from app import *
 
 @pytest.fixture
 def light():
-    return Light()
+    return StandardLight()
 
 
 def test_light_turn_on_and_off(light):
-    assert light.brightness == Light.OFF
+    assert light.brightness == StandardLight.OFF
     light.turn_on()
-    assert light.brightness == Light.ON
+    assert light.brightness == StandardLight.ON
     light.turn_off()
-    assert light.brightness == Light.OFF
+    assert light.brightness == StandardLight.OFF
 
 
 def test_light_toggle(light):
-    assert light.brightness == Light.OFF
+    assert light.brightness == StandardLight.OFF
     light.toggle()
-    assert light.brightness == Light.ON
+    assert light.brightness == StandardLight.ON
     light.toggle()
-    assert light.brightness == Light.OFF
+    assert light.brightness == StandardLight.OFF
 
 
 def test_light_command(light):
-    assert light.brightness == Light.OFF
+    assert light.brightness == StandardLight.OFF
     light.command('turn on')
-    assert light.brightness == Light.ON
+    assert light.brightness == StandardLight.ON
     light.command('turn off')
-    assert light.brightness == Light.OFF
+    assert light.brightness == StandardLight.OFF
     light.command('toggle')
-    assert light.brightness == Light.ON
+    assert light.brightness == StandardLight.ON
 
 
 def test_point():

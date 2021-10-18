@@ -1,10 +1,8 @@
 import re
 
 class Light:
-    OFF = 0
-    ON = 1
     def __init__(self):
-        self.brightness = self.OFF
+        self.brightness = 0
 
     def command(self, action):
         str_to_func = {
@@ -14,6 +12,10 @@ class Light:
         }
         func = str_to_func.get(action, lambda: None)
         func()
+
+class StandardLight(Light):
+    OFF = 0
+    ON = 1
 
     def turn_on(self):
         self.brightness = self.ON
@@ -26,7 +28,6 @@ class Light:
             self.turn_off()
         else:
             self.turn_on()
-
 
 class Point:
     def __init__(self, x, y):
@@ -45,9 +46,9 @@ class Point:
 
 
 class Grid:
-    def __init__(self, size=1000):
+    def __init__(self, size=1000, light=StandardLight):
         self.size = size
-        self.lights = [[Light() for _ in range(size)] for _ in range(size)]
+        self.lights = [[light() for _ in range(size)] for _ in range(size)]
 
     def count_lights(self):
         result = 0
