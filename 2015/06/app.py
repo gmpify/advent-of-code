@@ -4,7 +4,7 @@ class Light:
     OFF = 0
     ON = 1
     def __init__(self):
-        self.status = self.OFF
+        self.brightness = self.OFF
 
     def command(self, action):
         str_to_func = {
@@ -16,13 +16,13 @@ class Light:
         func()
 
     def turn_on(self):
-        self.status = self.ON
+        self.brightness = self.ON
 
     def turn_off(self):
-        self.status = self.OFF
+        self.brightness = self.OFF
 
     def toggle(self):
-        if self.status == self.ON:
+        if self.brightness == self.ON:
             self.turn_off()
         else:
             self.turn_on()
@@ -54,7 +54,7 @@ class Grid:
         for x in range(self.size):
             for y in range(self.size):
                 light = self.lights[x][y]
-                result += light.status
+                result += light.brightness
         return result
 
     def run_command(self, command):

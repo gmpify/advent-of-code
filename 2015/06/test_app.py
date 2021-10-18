@@ -8,29 +8,29 @@ def light():
 
 
 def test_light_turn_on_and_off(light):
-    assert light.status == Light.OFF
+    assert light.brightness == Light.OFF
     light.turn_on()
-    assert light.status == Light.ON
+    assert light.brightness == Light.ON
     light.turn_off()
-    assert light.status == Light.OFF
+    assert light.brightness == Light.OFF
 
 
 def test_light_toggle(light):
-    assert light.status == Light.OFF
+    assert light.brightness == Light.OFF
     light.toggle()
-    assert light.status == Light.ON
+    assert light.brightness == Light.ON
     light.toggle()
-    assert light.status == Light.OFF
+    assert light.brightness == Light.OFF
 
 
 def test_light_command(light):
-    assert light.status == Light.OFF
+    assert light.brightness == Light.OFF
     light.command('turn on')
-    assert light.status == Light.ON
+    assert light.brightness == Light.ON
     light.command('turn off')
-    assert light.status == Light.OFF
+    assert light.brightness == Light.OFF
     light.command('toggle')
-    assert light.status == Light.ON
+    assert light.brightness == Light.ON
 
 
 def test_point():
