@@ -46,7 +46,7 @@ class Point:
 
 class Grid:
     def __init__(self, size=1000):
-        self.size = 1000
+        self.size = size
         self.lights = [[Light() for _ in range(size)] for _ in range(size)]
 
     def count_lights(self, status=Light.ON):
