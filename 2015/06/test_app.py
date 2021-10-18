@@ -47,7 +47,6 @@ def test_point_parse():
 def test_grid_count():
     grid = Grid()
     assert grid.count_lights() == 0
-    assert grid.count_lights(Light.OFF) == 1_000_000
 
 
 def test_grid_parse_command():

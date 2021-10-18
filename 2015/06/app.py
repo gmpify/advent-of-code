@@ -49,13 +49,12 @@ class Grid:
         self.size = size
         self.lights = [[Light() for _ in range(size)] for _ in range(size)]
 
-    def count_lights(self, status=Light.ON):
+    def count_lights(self):
         result = 0
         for x in range(self.size):
             for y in range(self.size):
                 light = self.lights[x][y]
-                if light.status == status:
-                    result += 1
+                result += light.status
         return result
 
     def run_command(self, command):
