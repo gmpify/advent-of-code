@@ -13,7 +13,7 @@ class Light:
             'toggle': self.toggle
         }
         func = str_to_func.get(action, lambda: None)
-        return func()
+        func()
 
     def turn_on(self):
         self.status = self.ON
