@@ -5,18 +5,20 @@ class Wire:
     def __init__(self, input):
         self.signal_input = input
         self.signal = None
-        self.depends_on = set()
+        self.dependencies = set()
+        self.resolved_dependencies = {}
         self.parse_dependencies()
 
     def parse_dependencies(self):
         for input_wire in re.findall(r'[a-z]{1,2}', self.signal_input):
-            self.depends_on.add(input_wire)
+            self.dependencies.add(input_wire)
 
-    def has_dependencies(self):
-        return len(self.depends_on) > 0
+    def has_unresolved_dependencies(self):
+        return len(self.dependencies) != len(self.resolved_dependencies)
     
-    def remove_dependency(self, element):
-        self.depends_on.discard(element)
+    def resolve_dependency(self, element, signal):
+        if element in self.dependencies:
+            self.resolved_dependencies[element] = signal
 
     @classmethod
     def build_wire_type(self, input):
@@ -96,17 +98,17 @@ class Circuit:
             value = func(self.wires)
             self.wires[element].signal = value
             print(f'{element}: {value}')
-            self.delete_element_in_dependencies(element)
+            self.resolve_dependencies_from_element(element, value)
 
     def find_unresolved_element_without_dependencies(self):
         for identifier, wire in self.wires.items():
-            if wire.signal is None and not wire.has_dependencies():
+            if wire.signal is None and not wire.has_unresolved_dependencies():
                 return identifier
         return None
 
-    def delete_element_in_dependencies(self, element):
+    def resolve_dependencies_from_element(self, element, value):
         for _, wire in self.wires.items():
-            wire.remove_dependency(element)
+            wire.resolve_dependency(element, value)
 
     def add_instruction(self, instruction):
         input, identifier = [term.strip() for term in instruction.split('->')]
