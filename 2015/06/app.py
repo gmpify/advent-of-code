@@ -29,6 +29,18 @@ class StandardLight(Light):
         else:
             self.turn_on()
 
+class DimmableLight(Light):
+    def turn_on(self):
+        self.brightness += 1
+
+    def turn_off(self):
+        self.brightness -= 1
+        if self.brightness < 0:
+            self.brightness = 0
+
+    def toggle(self):
+        self.brightness += 2
+
 class Point:
     def __init__(self, x, y):
         self.x = x
@@ -80,5 +92,9 @@ if __name__ == '__main__':
     grid = Grid()
     for command in input:
         grid.run_command(command)
-    
     print('Number of lights lit are: ', grid.count_lights())
+
+    grid = Grid(light=DimmableLight)
+    for command in input:
+        grid.run_command(command)
+    print('Sum of brigthness for dimmable lights are: ', grid.count_lights())

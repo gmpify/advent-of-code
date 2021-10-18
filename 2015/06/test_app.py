@@ -7,6 +7,11 @@ def light():
     return StandardLight()
 
 
+@pytest.fixture
+def dimmable_light():
+    return DimmableLight()
+
+
 def test_light_turn_on_and_off(light):
     assert light.brightness == StandardLight.OFF
     light.turn_on()
@@ -21,6 +26,24 @@ def test_light_toggle(light):
     assert light.brightness == StandardLight.ON
     light.toggle()
     assert light.brightness == StandardLight.OFF
+
+
+def test_dimmable_light_turn_on_and_off(dimmable_light):
+    assert dimmable_light.brightness == 0
+    dimmable_light.turn_off()
+    assert dimmable_light.brightness == 0
+    dimmable_light.turn_on()
+    assert dimmable_light.brightness == 1
+    dimmable_light.turn_off()
+    assert dimmable_light.brightness == 0
+
+
+def test_dimmable_light_toggle(dimmable_light):
+    assert dimmable_light.brightness == 0
+    dimmable_light.toggle()
+    assert dimmable_light.brightness == 2
+    dimmable_light.toggle()
+    assert dimmable_light.brightness == 4
 
 
 def test_light_command(light):
@@ -61,3 +84,9 @@ def test_grid_run_command():
     assert grid.count_lights() == 0
     grid.run_command('turn on 0,0 through 999,999')
     assert grid.count_lights() == 1_000_000
+
+def test_grid__dimmable_lights_run_command():
+    grid = Grid(light=DimmableLight)
+    assert grid.count_lights() == 0
+    grid.run_command('toggle 0,0 through 999,999')
+    assert grid.count_lights() == 2_000_000
