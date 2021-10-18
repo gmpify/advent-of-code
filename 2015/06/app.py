@@ -71,3 +71,14 @@ class Grid:
         begin = Point.parse(m.group('begin'))
         end = Point.parse(m.group('end'))
         return action, begin, end
+
+
+if __name__ == '__main__':
+    f = open('input.txt')
+    input = f.read().split('\n')
+
+    grid = Grid()
+    for command in input:
+        grid.run_command(command)
+    
+    print('Number of lights lit are: ', grid.count_lights())
