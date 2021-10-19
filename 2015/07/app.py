@@ -101,7 +101,6 @@ class Circuit:
             if element is None:
                 break
             value = self.wires[element].resolve()
-            print(f'{element}: {value}')
             self.resolve_dependencies_from_element(element, value)
 
     def find_unresolved_element_without_dependencies(self):
@@ -123,8 +122,20 @@ if __name__ == '__main__':
     f = open('input.txt')
     input = f.read().split('\n')
 
+    print('Part One')
     circuit = Circuit()
     for line in input:
         circuit.add_instruction(line)
-    
     circuit.resolve()
+    result = circuit.wires['a'].signal
+    print('a: ', result)
+
+    print('Part Two')
+    circuit = Circuit()
+    for line in input:
+        if line == '19138 -> b':
+            line = f'{result} -> b'
+        circuit.add_instruction(line)
+    circuit.resolve()
+    result = circuit.wires['a'].signal
+    print('a: ', result)
