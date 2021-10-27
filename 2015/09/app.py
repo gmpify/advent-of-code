@@ -73,6 +73,14 @@ def get_shortest_path(paths):
     return shortest_path
 
 
+def get_longest_path(paths):
+    longest_path = paths[0]
+    for path in paths:
+        if path.total_distance > longest_path.total_distance:
+            longest_path = path
+    return longest_path
+
+
 def load_graph(file_name):
     result = {}
     file = open(file_name)
@@ -96,4 +104,11 @@ if __name__ == '__main__':
     print(' Distance: ', shortest_path.total_distance)
     print(' Path:')
     for c in shortest_path.cities:
+        print('  ', c.name)
+
+    longest_path = get_longest_path(paths)
+    print('Solution Teo')
+    print(' Distance: ', longest_path.total_distance)
+    print(' Path:')
+    for c in longest_path.cities:
         print('  ', c.name)

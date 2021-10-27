@@ -1,4 +1,4 @@
-from app import City, Path, find_paths, load_graph, get_shortest_path
+from app import City, Path, find_paths, load_graph, get_shortest_path, get_longest_path
 
 def test_add_connection():
     london = City('London')
@@ -50,3 +50,11 @@ def test_get_shortest_path():
     result = get_shortest_path(paths)
 
     assert result.total_distance == 605
+
+
+def test_get_longest_path():
+    graph = load_graph('test.txt')
+    paths = find_paths(graph)
+    result = get_longest_path(paths)
+
+    assert result.total_distance == 982
