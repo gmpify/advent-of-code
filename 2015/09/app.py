@@ -1,4 +1,3 @@
-import random
 import copy
 import re
 
@@ -48,11 +47,11 @@ def find_paths(graph):
         root.add_connection(city, 0)
 
     result = []
-    find_path_recurse(Path(root), result, set())
+    find_path_recurse(result, Path(root), set())
     return result
 
 
-def find_path_recurse(path, result, visited):
+def find_path_recurse(result, path, visited):
     city = path.cities[-1]
     if len(visited) == len(city.connections) + 1:
         result.append(path)
@@ -62,7 +61,7 @@ def find_path_recurse(path, result, visited):
             p.add_city(connection)
             v = copy.copy(visited)
             v.add(connection)
-            find_path_recurse(p, result, v)
+            find_path_recurse(result, p, v)
 
 
 def get_shortest_path(paths):
