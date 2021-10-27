@@ -100,15 +100,16 @@ if __name__ == '__main__':
     graph = load_graph('input.txt')
     paths = find_paths(graph)
     shortest_path = get_shortest_path(paths)
+
     print('Solution One')
-    print(' Distance: ', shortest_path.total_distance)
+    print(' Distance:', shortest_path.total_distance)
     print(' Path:')
     for c in shortest_path.cities:
         print('  ', c.name)
 
     longest_path = get_longest_path(paths)
-    print('Solution Teo')
-    print(' Distance: ', longest_path.total_distance)
+    print('Solution Two')
+    print(' Distance:', longest_path.total_distance)
     print(' Path:')
     for c in longest_path.cities:
         print('  ', c.name)
