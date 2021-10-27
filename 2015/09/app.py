@@ -57,10 +57,10 @@ def find_path_recurse(path, result, visited):
     if len(visited) == len(city.connections) + 1:
         result.append(path)
     for connection in city.connections:
-        v = copy.copy(visited)
-        if connection not in v:
+        if connection not in visited:
             p = copy.copy(path)
             p.add_city(connection)
+            v = copy.copy(visited)
             v.add(connection)
             find_path_recurse(p, result, v)
 

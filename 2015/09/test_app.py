@@ -36,6 +36,7 @@ def test_load_graph():
     assert City('Dublin').name == result['Dublin'].name
     assert City('Belfast').name == result['Belfast'].name
 
+
 def test_find_paths():
     graph = load_graph('test.txt')
     result = find_paths(graph)
