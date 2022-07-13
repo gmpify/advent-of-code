@@ -48,7 +48,7 @@ class Recipe:
 
         return capacity * durability * flavor * texture
 
-def process(file):
+def process(file, calories = None):
     ingredients = []
     for line in open(file):
         ingredient = Ingredient.load(line)
@@ -61,10 +61,18 @@ def process(file):
         recipe = Recipe()
         for i in range(len(ingredients)):
             recipe.add_ingredient(ingredients[i], combination[i])
+
+        if calories and recipe.calories != calories:
+            continue
+
         if winner is None or recipe.score() > winner.score():
             winner = recipe
 
-    print(f"Winner recipe has score {winner.score()}")
+    if calories:
+        print(f"Winner recipe with {calories} calories has score {winner.score()}")
+    else:
+        print(f"Winner recipe has score {winner.score()}")
 
 if __name__ == '__main__':
     process('input.txt')
+    process('input.txt', 500)
