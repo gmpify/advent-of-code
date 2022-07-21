@@ -1,4 +1,6 @@
 import re
+import collections
+import operator
 
 class Sue:
     def __init__(self, number):
@@ -9,6 +11,17 @@ class Sue:
         for thing in things:
             if thing in self.things and things[thing] != self.things[thing]:
                 return False
+        return True
+
+    def has_with_retroencabulator(self, things):
+        comparators = collections.defaultdict(lambda: operator.eq)
+        comparators['cats'] = comparators['trees'] = operator.gt
+        comparators['pomeranians'] = comparators['goldfish'] = operator.lt
+
+        for thing in things:
+            if thing in self.things and not comparators[thing](self.things[thing], things[thing]):
+                return False
+
         return True
 
     def load(input):
@@ -27,13 +40,20 @@ class Sue:
 
 
 def process(file, things):
-
     for line in open(file):
         s = Sue.load(line)
-
         if s.has(things):
             print(f"Found Sue! It's #{s.number}")
             return
+    print('Not found')
+
+def process_with_retroencabulator(file, things):
+    for line in open(file):
+        s = Sue.load(line)
+        if s.has_with_retroencabulator(things):
+            print(f"Found Sue! It's #{s.number}")
+            return
+    print('Not found')
 
 if __name__ == '__main__':
     things = {
@@ -50,3 +70,4 @@ if __name__ == '__main__':
     }
 
     process('input.txt', things)
+    process_with_retroencabulator('input.txt', things)
