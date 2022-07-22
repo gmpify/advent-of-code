@@ -22,7 +22,8 @@ if __name__ == '__main__':
     containers = [int(l) for l in open('input.txt')]
     result = find_combinations(150, containers)
 
-    print(f"Part 1: {sum(map(lambda x: len(x), result.values()))} combinations")
+    m = map(lambda x: len(x), result.values())
+    print(f"Part 1: {sum(m)} combinations")
 
     m = min(result.keys())
     print(f"Part 2: {len(result[m])} combinations")
