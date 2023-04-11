@@ -18,13 +18,19 @@ class Light:
             self.next_state = self.ON
         else:
             self.next_state = self.state
-    
+
     def do_next_state(self):
         self.state = self.next_state
-            
+
+class AlwaysOnLight(Light):
+    def __init__(self):
+        self.state = self.ON
+
+    def calculate_next_state(self, _):
+        self.next_state = self.ON
 
 class Grid:
-    def __init__(self, initial_state):
+    def __init__(self, initial_state, special_corner_light = False):
         self.state = []
 
         for line in initial_state.split('\n'):
@@ -32,6 +38,12 @@ class Grid:
             for light in line:
                 lights_line.append(Light(light))
             self.state.append(lights_line)
+
+        if special_corner_light:
+            self.state[0][0] = AlwaysOnLight()
+            self.state[0][-1] = AlwaysOnLight()
+            self.state[-1][0] = AlwaysOnLight()
+            self.state[-1][-1] = AlwaysOnLight()
 
     def count_lights_on(self):
         count = 0
@@ -81,12 +93,18 @@ class Grid:
 if __name__ == "__main__":
     initial_state = open('input.txt').read().strip()
 
-    grid = Grid(initial_state)
-    print("Part 1")
-
     steps = 100
+
+    print("Part 1")
+    grid = Grid(initial_state)
     for i in range(steps):
         grid.step()
-
     lights_on = grid.count_lights_on()
-    print(f"After 100 steps, grid has {lights_on} lights on")
+    print(f"After {steps} steps, grid has {lights_on} lights on")
+
+    print("Part 2")
+    grid = Grid(initial_state, special_corner_light=True)
+    for i in range(steps):
+        grid.step()
+    lights_on = grid.count_lights_on()
+    print(f"After {steps} steps, grid has {lights_on} lights on")
