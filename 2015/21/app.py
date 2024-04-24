@@ -147,21 +147,25 @@ if __name__ == '__main__':
     exit
     equipment_combinations.sort(key=combination_cost)
 
+    least_cost_as_winner = float("inf")
+    highest_cost_as_loser = float("-inf")
+
     for equipment in equipment_combinations:
         boss = Character('boss', 104, 8, 1)
 
         player = Character('player', 100, 0, 0)
         for e in equipment:
             player.equip(e)
+        equipment_cost = combination_cost(equipment)
 
-        print(player.damage)
-        print(player.armor)
         fight = Fight(boss, player)
         fight.start()
 
-        print("=====")
-        print(f"Equipment cost: {combination_cost(equipment)}.")
-        print(f"Winner is: {fight.winner.name}.")
+        if fight.winner == player and equipment_cost < least_cost_as_winner:
+            least_cost_as_winner = equipment_cost
+            
+        if fight.winner == boss and equipment_cost > highest_cost_as_loser:
+            highest_cost_as_loser = equipment_cost
 
-        if fight.winner == player:
-            break
+    print(f"Part 1 - least_cost_as_winner: {least_cost_as_winner}")
+    print(f"Part 2 - highest_cost_as_loser: {highest_cost_as_loser}")
