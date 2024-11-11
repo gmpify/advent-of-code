@@ -43,5 +43,11 @@ if __name__ == '__main__':
     print("Part 1")
     machine = Machine(rules, calibration_input)
     count = machine.distinct_molecules_count()
-
     print(f"There are {count} different possible molecules")
+
+    # https://www.reddit.com/r/adventofcode/comments/3xflz8/comment/cy4etju/
+    print("Part 2")
+    elements = sum(c.isupper() for c in calibration_input)
+    rn = calibration_input.count("Rn")
+    y = calibration_input.count("Y")
+    print(elements - 2*rn - 2*y - 1)
